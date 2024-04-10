@@ -1,0 +1,153 @@
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    /**box-sizing: border-box;**/
+    place-content: center;
+    display: grid;
+    animation: parpadeo 6s linear infinite;
+    background-color: #aaa3a3;
+}
+
+body::before{
+    content: "";
+    position: fixed; 
+    width: 100%;
+    height: 100%;
+    animation: cambio-de-color 5s infinite;
+    /*animation: cambio-de-color 5s infinite, parpadeo 2s linear infinite;*/
+    z-index: -1; /*hace que este detrás de todos los de demas objetos*/
+    filter: blur(5px);
+    
+}
+
+.fantasma {
+    display: flex;
+    justify-content: space-between;
+    z-index: 1; /* enfrente*/
+    width: 280px;
+    box-sizing: border-box;
+    position: relative;
+    border: 20px solid #00000000;
+    padding-inline: 42px;
+    aspect-ratio: 1; /**l ancho y la altura del elemento deben ser iguales**/
+    transition: 5s;
+
+
+    /*el cuerpo del fantasma*/
+    background: 
+    /*ojo izquierdo*/
+    radial-gradient(50% 50%,#000000 100%,#0000) 65% 28%/10% 10% no-repeat,
+    /*ojo derecho*/
+    radial-gradient(50% 50%,#000000 100%,#0000) 35% 28%/10% 10% no-repeat,
+    /*boca*/
+    radial-gradient(50% 50%,#000000 100%,#0000) 50% 45%/10% 14% no-repeat,
+    /*cabeza, hasta la mitad del ojo*/
+    radial-gradient(50% 100% at bottom,#ffffff 100%,#0000 101%) top/65% 32% no-repeat,
+    /*cuadrado del cuerpo*/
+    linear-gradient(#ffffff 0 0) 50% calc(100% - 45px)/65% 50% no-repeat,
+    /*medio circulo arriba*/
+    radial-gradient(18.31px at 50% calc(100% - 25.50px),#ffffff 99%,#0000 101%) calc(50% - 30px) 100%/60px 30px repeat-x content-box,
+    /*parte de arriba de las patitas*/
+    radial-gradient(18.31px at 50% calc(100% + 10.50px),#0000 99%,#ffffff 101%) 50% calc(100% - 15px)/60px 30px repeat-x content-box
+    ;
+
+    /** los bordes de abajo**/
+    border-radius: 0 0 38% 38%/0 0 24% 20%;
+    
+    
+    /*animacion*/
+    animation:
+    Movimiento_abajo_arriba 4s infinite linear alternate,
+    Movimiento_abajo_arriba_Elementos 4s infinite linear;
+
+    /*filtros*/
+    filter: 
+    blur(0.5px) contrast(1.5) brightness(0.8) saturate(0.8) hue-rotate(180deg);
+    
+    
+    
+}
+
+@keyframes Movimiento_abajo_arriba{
+    50%{transform:translateX(-100%)
+    translateY(-20%)
+    }
+    100%{transform:translateX(100%)
+        translateY(50%)
+        }
+}
+
+
+
+@keyframes Movimiento_abajo_arriba_Elementos{
+    /*primeros 4 nums ojos, luego lso 2, luego la boca xd*/
+    0% {background-position:
+        64% 28%,34% 28%,
+        50% 50%,top,50% 
+        calc(100% - 45px),
+        calc(50% - 30px) 100%,
+        50% calc(100% - 15px)}
+
+    100% {background-position:
+        65% 28%,35% 28%,
+        50% 46%,top,50% 
+        calc(100% - 45px),
+        calc(50% - 90px) 100%,
+        calc(50% - 60px) 
+        calc(100% - 15px)}
+
+}
+
+.fantasma:before, 
+.fantasma:after { /*primera mano*/
+    content: "";
+    width: 28%;
+    height: 15%;
+    background: #ffffff;
+    border-radius: 50px 0 0 50px;
+    transform-origin: right;
+    transform: rotate(15deg);
+    --a: -15deg;
+    margin-top: 50%;
+    margin-left: -25%;
+    animation: Movimiento_manos .9s infinite linear alternate; /*ease-in-out*/
+
+
+        
+}
+.fantasma:after { /*segunda mano*/
+    border-radius: 0 50px 50px 0 ;
+    transform-origin: left;
+    transform: rotate(-15deg);
+    --a: 15deg;
+    margin-right: -25%;
+}
+
+
+@keyframes Movimiento_manos{
+    100% {transform:rotate((var(--a)))}
+}
+
+
+.fantasma-espejo{
+    transform: scaleX(-1);
+    opacity: 1;
+}
+
+
+
+@keyframes cambio-de-color{
+    0% {background-color: red;}
+    25% {background-color: yellow;}
+    50% {background-color: green;}
+    75% {background-color: blue;}
+    100% {background-color: black;}
+
+}
+
+@keyframes parpadeo{
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
